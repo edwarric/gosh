@@ -1,15 +1,15 @@
 App = {
     size: {
-        width: 1550,
-        height: 750,
+        width: 850,
+        height: 900,
     },
     room: {
         width: 700,
         height: 600,
     },
-    textbox: {
-        width: 600,
-        height: 750,
+    button: {
+        width: 50,
+        height: 50,
     },
 
     build_room() {
@@ -62,6 +62,10 @@ App = {
             })
             .bind('MouseOut', function(e) {
                 this.color("red");
+            })
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('bed');
+                //document.getElementById('bed').style.display = 'block';
             });
 
         // desk
@@ -75,34 +79,43 @@ App = {
             .color('rgb(255, 0, 0)');
 
         // desk with voice assistant
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 0,
                 y: 375, // 10 out from bed
                 w: 60,
                 h: 60,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('voice-assistant');
+            });
 
         // a/c
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 0,
                 y: 510,
                 w: 30,
                 h: 80,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('ac');
+            });
 
         // window
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 50,
                 y: 0,
                 w: 600,
                 h: 20,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('window');
+            });
 
         // chair
         Crafty.e('2D, Canvas, Color')
@@ -125,14 +138,17 @@ App = {
             .color('rgb(255, 0, 0)');
 
         // TV/dashboard
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 680,
                 y: this.room.height / 2 - 150,
                 w: 40,
                 h: 300,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('dashboard');
+            });
 
         // doorway
         Crafty.e('2D, Canvas, Color')
@@ -145,46 +161,58 @@ App = {
             .color('rgb(255, 0, 0)');
 
         // speaker1
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 680,
                 y: 70,
                 w: 20,
                 h: 50,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('speaker');
+            });
 
         // speaker1
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 680,
                 y: 480,
                 w: 20,
                 h: 50,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('speaker');
+            });
 
         // nurse
-        Crafty.e('2D, Canvas, Color')
+        Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: App.room.width + 55,
                 y: App.room.height / 2 - 30,
                 w: 60,
                 h: 60,
             })
-            .color('rgb(255, 0, 0)');
+            .color('rgb(255, 0, 0)')
+            .bind('Click', function(MouseEvent) {
+                showInfoOn('nurse');
+            });
 
     },
 
-    create_textbox() {
-        Crafty.e('2D, Canvas, Color')
-            .attr({
-                x: 900,
-                y: 0,
-                w: App.textbox.width,
-                h: App.textbox.height,
-            })
-            .color('rgb(0, 255, 0)');
+    build_buttons() {
+        alert("Build buttons");
+        /*
+        Build buttons:
+        - Patient temperature
+        - Sleeping
+        - Heart rate
+        - Voice
+        - Reading
+        - TV
+        - Music (as part of sleeping or whatever)
+        */
     },
 
     start: function() {
@@ -192,7 +220,7 @@ App = {
         Crafty.background('rgb(0, 255, 255)');
 
         App.build_room();
-        App.create_textbox();
+        App.build_buttons();
 
 
     }

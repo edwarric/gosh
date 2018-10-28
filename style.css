@@ -1,7 +1,27 @@
 body {
     margin: 50px;
+    min-width: 750px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #app {
     border: 1px solid black;
+}
+
+.text-box {
+    display: none;
+    margin: 0 50px;
+    width: 600px;
+}
+
+.title {
+    font-family: 'Arial';
+    font-size: 30px;
+}
+
+.content {
+    font-family: 'Arial';
+    font-size: 18px;
 }
