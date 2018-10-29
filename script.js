@@ -12,13 +12,7 @@ App = {
         height: 50,
     },
 
-    build_room() {
-        // Load images
-        // Crafty.sprite("file-csv.png", {pic:[0,0,384,512]});
-        // Assign and insert images
-        // var pic = Crafty.e("2D, Canvas, pic");
-
-        // Load images
+    load_sprites() {
         Crafty.sprite("pics/ac-off.png", {
             acOff: [0, 0, 30, 80]
         });
@@ -82,8 +76,9 @@ App = {
         Crafty.sprite("pics/window-3.png", {
             window3: [0, 0, 600, 20]
         });
+    },
 
-
+    build_room() {
         // button background
         Crafty.e('2D, Canvas, buttonBg')
             .attr({
@@ -525,6 +520,7 @@ App = {
         Crafty.init(App.size.width, App.size.height, document.getElementById('app'));
         //Crafty.background('rgb(0, 255, 255)');
 
+        App.load_sprites();
         App.build_room();
         App.build_buttons();
 
