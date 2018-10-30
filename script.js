@@ -1,3 +1,5 @@
+var a, w;
+
 App = {
     size: {
         width: 850,
@@ -64,6 +66,36 @@ App = {
         Crafty.sprite("pics/wall.png", {
             wall: [0, 0, 700, 600]
         });
+        var windows = {
+            "sprites": {
+                "pics/windows.png": {
+                    tile: 600,
+                    tileh: 20,
+                    map: {
+                        window0: [0, 0],
+                        window1: [0, 1],
+                        window2: [0, 2],
+                        window3: [0, 3]
+                    }
+                }
+            }
+        };
+        var airWaves = {
+            "sprites": {
+                "pics/air-waves.png": {
+                    tile: 60,
+                    tileh: 60,
+                    map: {
+                        airNone: [0, 0],
+                        air1: [0, 1],
+                        air2: [0, 2]
+                    }
+                }
+            }
+        };
+        Crafty.load(windows);
+        Crafty.load(airWaves);
+        /*
         Crafty.sprite("pics/window-0.png", {
             window0: [0, 0, 600, 20]
         });
@@ -76,6 +108,7 @@ App = {
         Crafty.sprite("pics/window-3.png", {
             window3: [0, 0, 600, 20]
         });
+        */
     },
 
     build_room() {
@@ -161,18 +194,38 @@ App = {
                 showInfoOn('ac');
             });
 
+        a = Crafty.e('2D, Canvas, airNone, SpriteAnimation')
+            .attr({
+                x: 60,
+                y: 500
+            });
+
+        a.reel("blowing", 2000, [
+            [0, 1],
+            [0, 2],
+            [0, 1],
+            [0, 2],
+            [0, 1],
+            [0, 2],
+            [0, 1],
+            [0, 2],
+            [0, 0]
+        ]);
         // window
-        Crafty.e('2D, Canvas, window0, Mouse')
+        w = Crafty.e('2D, Canvas, window0, Mouse, SpriteAnimation')
             .attr({
                 x: 50,
-                y: 0,
-                w: 600,
-                h: 20,
+                y: 0
             })
             .bind('Click', function(MouseEvent) {
                 showInfoOn('window');
             });
-
+        w.reel("closing", 2000, [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3]
+        ]);
         // chair
         Crafty.e('2D, Canvas, chair')
             .attr({
@@ -252,8 +305,14 @@ App = {
 
     build_buttons() {
         // load temp
-        Crafty.sprite("temp.png", {
-            temp: [0, 0, 50, 50]
+        Crafty.sprite("pics/heart.png", {
+            heart: [0, 0, 100, 100]
+        });
+        Crafty.sprite("pics/sleeping.png", {
+            sleep: [0, 0, 100, 100]
+        });
+        Crafty.sprite("pics/temp.png", {
+            temp: [0, 0, 100, 100]
         });
 
         // Temperature
@@ -279,7 +338,10 @@ App = {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
+                        }, 2000);
+
+                        a.animate("blowing", 1);
+
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
@@ -321,7 +383,7 @@ App = {
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
                 // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
+                Crafty.e('2D, Canvas, Tween, sleep')
                     .attr({
                         x: 50,
                         y: 200
@@ -333,11 +395,13 @@ App = {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
+                        }, 2000);
+                        w.animate("closing", 1);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
                             }, 500);
+
                         });
                     });
             });
@@ -354,7 +418,7 @@ App = {
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
                 // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
+                Crafty.e('2D, Canvas, Tween, heart')
                     .attr({
                         x: 50,
                         y: 200
