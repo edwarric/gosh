@@ -1,4 +1,4 @@
-var a, ac, w, n;
+var a, ac, b, n, w, v;
 
 App = {
     size: {
@@ -9,15 +9,8 @@ App = {
         width: 700,
         height: 600,
     },
-    button: {
-        width: 50,
-        height: 50,
-    },
 
     load_sprites() {
-        Crafty.sprite("pics/bed.png", {
-            bed: [0, 0, 280, 130]
-        });
         Crafty.sprite("pics/button-bg.png", {
             buttonBg: [0, 0, 850, 150]
         });
@@ -26,12 +19,6 @@ App = {
         });
         Crafty.sprite("pics/desk.png", {
             desk: [0, 0, 60, 60]
-        });
-        Crafty.sprite("pics/desk-vc-off.png", {
-            deskVcOff: [0, 0, 60, 60]
-        });
-        Crafty.sprite("pics/desk-vc-on.png", {
-            deskVcOn: [0, 0, 60, 60]
         });
         Crafty.sprite("pics/hallway-side.png", {
             hallwaySide: [0, 0, 700, 150]
@@ -58,6 +45,19 @@ App = {
                         acOff: [0, 0],
                         acOn1: [0, 1],
                         acOn2: [0, 2]
+                    }
+                }
+            }
+        };
+
+        var bed = {
+            "sprites": {
+                "pics/bed.png": {
+                    tile: 285,
+                    tileh: 130,
+                    map: {
+                        bedOff: [0, 0],
+                        bedOn: [0, 1]
                     }
                 }
             }
@@ -110,10 +110,25 @@ App = {
             }
         };
 
+        var vc = {
+            "sprites": {
+                "pics/vc.png": {
+                    tile: 60,
+                    tileh: 60,
+                    map: {
+                        vOff: [0, 0],
+                        vOn: [0, 1]
+                    }
+                }
+            }
+        }
+
         Crafty.load(ac);
+        Crafty.load(bed);
         Crafty.load(doors);
         Crafty.load(speakers);
         Crafty.load(windows);
+        Crafty.load(vc);
     },
 
     build_room() {
@@ -154,17 +169,23 @@ App = {
             });
 
         // bed
-        Crafty.e('2D, Canvas, Mouse, bed')
+        b = Crafty.e('2D, Canvas, Mouse, bedOff, SpriteAnimation')
             .attr({
-                x: 25,
+                x: 20,
                 y: this.room.height / 2 - 65,
-                w: 280,
+                w: 285,
                 h: 130,
             })
             .bind('Click', function(MouseEvent) {
                 showInfoOn('bed');
                 //document.getElementById('bed').style.display = 'block';
             });
+        b.reel("bedLightOn", 2000, [
+            [0, 1]
+        ]);
+        b.reel("bedLightOff", 2000, [
+            [0, 0]
+        ]);
 
         // desk
         Crafty.e('2D, Canvas, desk')
@@ -176,7 +197,7 @@ App = {
             });
 
         // desk with voice assistant
-        Crafty.e('2D, Canvas, deskVcOff, Mouse')
+        v = Crafty.e('2D, Canvas, vOff, Mouse, SpriteAnimation')
             .attr({
                 x: 25,
                 y: 375, // 10 out from bed
@@ -186,6 +207,10 @@ App = {
             .bind('Click', function(MouseEvent) {
                 showInfoOn('voice-assistant');
             });
+        v.reel("listening", 6000, [
+            [0, 1],
+            [0, 0]
+        ]);
 
         // a/c
         a = Crafty.e('2D, Canvas, acOff, Mouse, SpriteAnimation')
@@ -229,7 +254,7 @@ App = {
             [0, 5],
             [0, 6]
         ]);
-        w.reel("opening", 500, [
+        w.reel("opening", 1000, [
             [0, 0],
             [0, 7]
         ]);
@@ -276,6 +301,11 @@ App = {
             [0, 0],
             [0, 1],
             [0, 2]
+        ]);
+        d.reel("dClosing", 1000, [
+            [0, 2],
+            [0, 1],
+            [0, 0]
         ]);
 
         // speaker1
@@ -336,15 +366,26 @@ App = {
     },
 
     build_buttons() {
-        // load temp
-        Crafty.sprite("pics/heart.png", {
-            heart: [0, 0, 100, 100]
+        Crafty.sprite("pics/book.png", {
+            reading: [0, 0, 128, 128]
         });
-        Crafty.sprite("pics/sleeping.png", {
-            sleep: [0, 0, 100, 100]
+        Crafty.sprite("pics/good.png", {
+            good: [0, 0, 128, 128]
+        });
+        Crafty.sprite("pics/heart.png", {
+            heart: [0, 0, 128, 128]
+        });
+        Crafty.sprite("pics/medicine.png", {
+            medicine: [0, 0, 128, 128]
+        });
+        Crafty.sprite("pics/sleep.png", {
+            sleep: [0, 0, 128, 128]
+        });
+        Crafty.sprite("pics/speech.png", {
+            speech: [0, 0, 128, 128]
         });
         Crafty.sprite("pics/temp.png", {
-            temp: [0, 0, 100, 100]
+            temp: [0, 0, 128, 128]
         });
 
         // Temperature
@@ -361,12 +402,12 @@ App = {
                 captionThis('temp');
                 Crafty.e('2D, Canvas, Tween, temp')
                     .attr({
-                        x: 50,
+                        x: 90,
                         y: 200
                     })
                     // Show temperature icon above patient
                     .tween({
-                        y: 190
+                        y: 150
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
@@ -395,17 +436,18 @@ App = {
                 // Show temperature icon above patient
                 Crafty.e('2D, Canvas, Tween, sleep')
                     .attr({
-                        x: 50,
+                        x: 90,
                         y: 200
                     })
                     // Show temperature icon above patient
                     .tween({
-                        y: 190
+                        y: 150
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
                         }, 2000);
+                        b.animate("bedLightOff", 1);
                         w.animate("closing", 1);
                         s1.animate("music", 1);
                         s2.animate("music", 1);
@@ -430,17 +472,17 @@ App = {
             .bind('Click', function(MouseEvent) {
                 Crafty.e('2D, Canvas, Tween, heart')
                     .attr({
-                        x: 50,
+                        x: 90,
                         y: 200
                     })
 
                     .tween({
-                        y: 190
+                        y: 150
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
+                        }, 2000);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
@@ -448,20 +490,91 @@ App = {
                         });
                     });
 
-                n.tween({y: 635}, 100).bind("TweenEnd", function() {
+                n.tween({
+                    y: 635
+                }, 1000).bind("TweenEnd", function() {
                     this.unbind("TweenEnd");
+                    Crafty.e("Delay").delay(function() {
+                        // open door when nurse arrives
+                        d.animate("dOpening", 1);
+                        n.pauseTweens();
+                        Crafty.e("Delay").delay(function() {
+                            // wait for door to open
+                            n.resumeTweens();
+                        }, 1200, 0);
+                    }, 500, 0);
                     this.tween({
-                        x: 530
-                    }, 100);
+                        x: 520
+                    }, 500).bind("TweenEnd", function() {
+                        this.unbind("TweenEnd");
+                        this.tween({
+                            y: 400
+                        }, 600).bind("TweenEnd", function() {
+                            this.unbind("TweenEnd");
+                            Crafty.e("Delay").delay(function() {
+                                // attend patient
+                                Crafty.e('2D, Canvas, Tween, good')
+                                    .attr({
+                                        x: 90,
+                                        y: 200
+                                    })
+                                    // Show temperature icon above patient
+                                    .tween({
+                                        y: 150
+                                    }, 200).bind("TweenEnd", function() {
+                                        this.unbind("TweenEnd");
+                                        this.tween({
+                                            alpha: 1.0
+                                        }, 2000);
+                                        this.bind("TweenEnd", function() {
+                                            this.tween({
+                                                alpha: 0.0,
+                                            }, 500);
+                                        });
+                                    });
+                                n.pauseTweens();
+                            }, 1000, 0);
+                            this.tween({
+                                x: 150
+                            }, 1000).bind("TweenEnd", function() {
+                                this.unbind("TweenEnd");
+                                Crafty.e("Delay").delay(function() {
+                                    // stop attending patient
+                                    n.resumeTweens();
+                                }, 1500, 0);
+                                // returning
+                                Crafty.e("Delay").delay(function() {
+                                    // wait for door to close
+                                    d.animate("dClosing", 1);
+                                    n.pauseTweens();
+                                }, 3100, 0);
+                                this.tween({
+                                    x: 520
+                                }, 1000).bind("TweenEnd", function() {
+                                    this.unbind("TweenEnd");
+                                    Crafty.e("Delay").delay(function() {
+                                        // stop attending patient
+                                        n.resumeTweens();
+                                    }, 1600, 0);
+                                    this.tween({
+                                        y: 635
+                                    }, 600).bind("TweenEnd", function() {
+                                        this.unbind("TweenEnd");
+                                        this.tween({
+                                            x: 745
+                                        }, 500).bind("TweenEnd", function() {
+                                            this.unbind("TweenEnd");
+                                            this.tween({
+                                                y: 270
+                                            }, 1000);
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
                 });
-                d.animate("dOpening", 1);
 
-                n.tween({y: 400}, 100).bind("TweenEnd", function() {
-                    this.unbind("TweenEnd");
-                    this.tween({
-                        x: 50
-                    }, 100);
-                });
             });
 
         // Voice-chat
@@ -475,25 +588,27 @@ App = {
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
                 // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
+                Crafty.e('2D, Canvas, Tween, speech')
                     .attr({
-                        x: 50,
+                        x: 90,
                         y: 200
                     })
                     // Show temperature icon above patient
                     .tween({
-                        y: 190
+                        y: 150
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
+                        }, 2000);
+                        v.animate("listening", 1);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
                             }, 500);
                         });
                     });
+
             });
 
         // Reading
@@ -507,19 +622,22 @@ App = {
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
                 // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
+                Crafty.e('2D, Canvas, Tween, reading')
                     .attr({
-                        x: 50,
+                        x: 90,
                         y: 200
                     })
                     // Show temperature icon above patient
                     .tween({
-                        y: 190
+                        y: 150
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
+                        }, 2000);
+                        b.animate("bedLightOn", 1);
+                        s1.animate("music", 1);
+                        s2.animate("music", 1);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
@@ -528,7 +646,7 @@ App = {
                     });
             });
 
-        // TV
+        // Medicine
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 525,
@@ -538,59 +656,113 @@ App = {
             })
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
-                // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
+                Crafty.e('2D, Canvas, Tween, medicine')
                     .attr({
-                        x: 50,
-                        y: 200
+                        x: 711,
+                        y: 150
                     })
-                    // Show temperature icon above patient
+
                     .tween({
-                        y: 190
+                        y: 130
                     }, 200).bind("TweenEnd", function() {
                         this.unbind("TweenEnd");
                         this.tween({
                             alpha: 1.0
-                        }, 3000);
-                        this.bind("TweenEnd", function() {
+                        }, 3000).bind("TweenEnd", function() {
                             this.tween({
-                                alpha: 0.0,
+                                alpha: 0.0
                             }, 500);
                         });
                     });
+                Crafty.e("Delay").delay(function() {
+                    n.tween({
+                        y: 635
+                    }, 1000).bind("TweenEnd", function() {
+                        this.unbind("TweenEnd");
+                        Crafty.e("Delay").delay(function() {
+                            // open door when nurse arrives
+                            d.animate("dOpening", 1);
+                            n.pauseTweens();
+                            Crafty.e("Delay").delay(function() {
+                                // wait for door to open
+                                n.resumeTweens();
+                            }, 1200, 0);
+                        }, 500, 0);
+                        this.tween({
+                            x: 520
+                        }, 500).bind("TweenEnd", function() {
+                            this.unbind("TweenEnd");
+                            this.tween({
+                                y: 400
+                            }, 600).bind("TweenEnd", function() {
+                                this.unbind("TweenEnd");
+                                Crafty.e("Delay").delay(function() {
+                                    // attend patient
+                                    Crafty.e('2D, Canvas, Tween, good')
+                                        .attr({
+                                            x: 90,
+                                            y: 200
+                                        })
+                                        // Show temperature icon above patient
+                                        .tween({
+                                            y: 150
+                                        }, 200).bind("TweenEnd", function() {
+                                            this.unbind("TweenEnd");
+                                            this.tween({
+                                                alpha: 1.0
+                                            }, 2000);
+                                            this.bind("TweenEnd", function() {
+                                                this.tween({
+                                                    alpha: 0.0,
+                                                }, 500);
+                                            });
+                                        });
+                                    n.pauseTweens();
+                                }, 1000, 0);
+                                this.tween({
+                                    x: 150
+                                }, 1000).bind("TweenEnd", function() {
+                                    this.unbind("TweenEnd");
+                                    Crafty.e("Delay").delay(function() {
+                                        // stop attending patient
+                                        n.resumeTweens();
+                                    }, 1500, 0);
+                                    // returning
+                                    Crafty.e("Delay").delay(function() {
+                                        // wait for door to close
+                                        d.animate("dClosing", 1);
+                                        n.pauseTweens();
+                                    }, 3100, 0);
+                                    this.tween({
+                                        x: 520
+                                    }, 1000).bind("TweenEnd", function() {
+                                        this.unbind("TweenEnd");
+                                        Crafty.e("Delay").delay(function() {
+                                            // stop attending patient
+                                            n.resumeTweens();
+                                        }, 1600, 0);
+                                        this.tween({
+                                            y: 635
+                                        }, 600).bind("TweenEnd", function() {
+                                            this.unbind("TweenEnd");
+                                            this.tween({
+                                                x: 745
+                                            }, 500).bind("TweenEnd", function() {
+                                                this.unbind("TweenEnd");
+                                                this.tween({
+                                                    y: 270
+                                                }, 1000);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                }, 2000, 0);
             });
 
-        // Music
-        Crafty.e('2D, Canvas, Color, Mouse')
-            .attr({
-                x: 620,
-                y: App.size.height - 110,
-                w: 70,
-                h: 70,
-            })
-            .color('rgb(255, 0, 0)')
-            .bind('Click', function(MouseEvent) {
-                // Show temperature icon above patient
-                Crafty.e('2D, Canvas, Tween, temp')
-                    .attr({
-                        x: 50,
-                        y: 200
-                    })
-                    // Show temperature icon above patient
-                    .tween({
-                        y: 190
-                    }, 200).bind("TweenEnd", function() {
-                        this.unbind("TweenEnd");
-                        this.tween({
-                            alpha: 1.0
-                        }, 3000);
-                        this.bind("TweenEnd", function() {
-                            this.tween({
-                                alpha: 0.0,
-                            }, 500);
-                        });
-                    });
-            });
+        // x = 525, 620
     },
 
     start: function() {
