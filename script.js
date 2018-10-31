@@ -1,9 +1,9 @@
-var a, w;
+var a, ac, w, n;
 
 App = {
     size: {
         width: 850,
-        height: 925,
+        height: 1050,
     },
     room: {
         width: 700,
@@ -15,12 +15,6 @@ App = {
     },
 
     load_sprites() {
-        Crafty.sprite("pics/ac-off.png", {
-            acOff: [0, 0, 30, 80]
-        });
-        Crafty.sprite("pics/ac-on.png", {
-            acOn: [0, 0, 30, 80]
-        });
         Crafty.sprite("pics/bed.png", {
             bed: [0, 0, 280, 130]
         });
@@ -39,15 +33,6 @@ App = {
         Crafty.sprite("pics/desk-vc-on.png", {
             deskVcOn: [0, 0, 60, 60]
         });
-        Crafty.sprite("pics/door-0.png", {
-            door0: [0, 0, 120, 120]
-        });
-        Crafty.sprite("pics/door-1.png", {
-            door1: [0, 0, 120, 120]
-        });
-        Crafty.sprite("pics/door-2.png", {
-            door2: [0, 0, 120, 120]
-        });
         Crafty.sprite("pics/hallway-side.png", {
             hallwaySide: [0, 0, 700, 150]
         });
@@ -57,58 +42,78 @@ App = {
         Crafty.sprite("pics/nurse.png", {
             nurse: [0, 0, 60, 60]
         });
-        Crafty.sprite("pics/speaker.png", {
-            speaker: [0, 0, 20, 50]
-        });
         Crafty.sprite("pics/tv-dashboard.png", {
             tvDashboard: [0, 0, 60, 300]
         });
         Crafty.sprite("pics/wall.png", {
             wall: [0, 0, 700, 600]
         });
+
+        var ac = {
+            "sprites": {
+                "pics/ac.png": {
+                    tile: 90,
+                    tileh: 80,
+                    map: {
+                        acOff: [0, 0],
+                        acOn1: [0, 1],
+                        acOn2: [0, 2]
+                    }
+                }
+            }
+        };
+
+        var doors = {
+            "sprites": {
+                "pics/doors.png": {
+                    tile: 120,
+                    tileh: 120,
+                    map: {
+                        dClosed: [0, 0],
+                        dHalf: [0, 1],
+                        dOpen: [0, 2]
+                    }
+                }
+            }
+        };
+
+        var speakers = {
+            "sprites": {
+                "pics/speakers.png": {
+                    tile: 60,
+                    tileh: 70,
+                    map: {
+                        sOff: [0, 0],
+                        s0: [0, 1],
+                        s1: [0, 2]
+                    }
+                }
+            }
+        };
+
         var windows = {
             "sprites": {
-                "pics/windows.png": {
+                "pics/w-test.png": {
                     tile: 600,
-                    tileh: 20,
+                    tileh: 91,
                     map: {
-                        window0: [0, 0],
-                        window1: [0, 1],
-                        window2: [0, 2],
-                        window3: [0, 3]
+                        w0: [0, 0],
+                        w1: [0, 1],
+                        w2: [0, 2],
+                        w3: [0, 3],
+                        w4: [0, 4],
+                        w5: [0, 5],
+                        w6: [0, 6],
+                        w7: [0, 7]
                     }
                 }
             }
         };
-        var airWaves = {
-            "sprites": {
-                "pics/air-waves.png": {
-                    tile: 60,
-                    tileh: 60,
-                    map: {
-                        airNone: [0, 0],
-                        air1: [0, 1],
-                        air2: [0, 2]
-                    }
-                }
-            }
-        };
+
+        Crafty.load(ac);
+        Crafty.load(doors);
+        Crafty.load(speakers);
         Crafty.load(windows);
-        Crafty.load(airWaves);
-        /*
-        Crafty.sprite("pics/window-0.png", {
-            window0: [0, 0, 600, 20]
-        });
-        Crafty.sprite("pics/window-1.png", {
-            window1: [0, 0, 600, 20]
-        });
-        Crafty.sprite("pics/window-2.png", {
-            window2: [0, 0, 600, 20]
-        });
-        Crafty.sprite("pics/window-3.png", {
-            window3: [0, 0, 600, 20]
-        });
-        */
     },
 
     build_room() {
@@ -116,7 +121,7 @@ App = {
         Crafty.e('2D, Canvas, buttonBg')
             .attr({
                 x: 0,
-                y: 775,
+                y: App.size.height - 150,
                 w: App.size.width,
                 h: 150,
             });
@@ -183,21 +188,15 @@ App = {
             });
 
         // a/c
-        Crafty.e('2D, Canvas, acOff, Mouse')
+        a = Crafty.e('2D, Canvas, acOff, Mouse, SpriteAnimation')
             .attr({
                 x: 20,
                 y: 490,
-                w: 30,
+                w: 90,
                 h: 80,
             })
             .bind('Click', function(MouseEvent) {
                 showInfoOn('ac');
-            });
-
-        a = Crafty.e('2D, Canvas, airNone, SpriteAnimation')
-            .attr({
-                x: 60,
-                y: 500
             });
 
         a.reel("blowing", 2000, [
@@ -211,8 +210,9 @@ App = {
             [0, 2],
             [0, 0]
         ]);
+
         // window
-        w = Crafty.e('2D, Canvas, window0, Mouse, SpriteAnimation')
+        w = Crafty.e('2D, Canvas, w0, Mouse, SpriteAnimation')
             .attr({
                 x: 50,
                 y: 0
@@ -224,8 +224,16 @@ App = {
             [0, 0],
             [0, 1],
             [0, 2],
-            [0, 3]
+            [0, 3],
+            [0, 4],
+            [0, 5],
+            [0, 6]
         ]);
+        w.reel("opening", 500, [
+            [0, 0],
+            [0, 7]
+        ]);
+
         // chair
         Crafty.e('2D, Canvas, chair')
             .attr({
@@ -256,17 +264,22 @@ App = {
                 showInfoOn('dashboard');
             });
 
-        // doorway
-        Crafty.e('2D, Canvas, door0')
+        // door
+        d = Crafty.e('2D, Canvas, dClosed, SpriteAnimation')
             .attr({
                 x: 500,
                 y: 480,
                 w: 120,
                 h: 120,
             });
+        d.reel("dOpening", 1000, [
+            [0, 0],
+            [0, 1],
+            [0, 2]
+        ]);
 
         // speaker1
-        Crafty.e('2D, Canvas, speaker, Mouse')
+        s1 = Crafty.e('2D, Canvas, sOff, Mouse, SpriteAnimation')
             .attr({
                 x: 660,
                 y: 70,
@@ -276,9 +289,19 @@ App = {
             .bind('Click', function(MouseEvent) {
                 showInfoOn('speaker');
             });
+        s1.reel("music", 2000, [
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [0, 0]
+        ]);
 
         // speaker2
-        Crafty.e('2D, Canvas, speaker, Mouse')
+        s2 = Crafty.e('2D, Canvas, sOff, Mouse, SpriteAnimation')
             .attr({
                 x: 660,
                 y: 480,
@@ -288,9 +311,18 @@ App = {
             .bind('Click', function(MouseEvent) {
                 showInfoOn('speaker');
             });
-
+        s2.reel("music", 2000, [
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [0, 0]
+        ]);
         // nurse
-        Crafty.e('2D, Canvas, nurse, Mouse')
+        n = Crafty.e('2D, Canvas, nurse, Mouse, Tween')
             .attr({
                 x: App.room.width + 45,
                 y: App.room.height / 2 - 30,
@@ -319,13 +351,14 @@ App = {
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 50,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
                 // Show temperature icon above patient
+                captionThis('temp');
                 Crafty.e('2D, Canvas, Tween, temp')
                     .attr({
                         x: 50,
@@ -339,9 +372,8 @@ App = {
                         this.tween({
                             alpha: 1.0
                         }, 2000);
-
                         a.animate("blowing", 1);
-
+                        w.animate("opening", 1);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
@@ -349,34 +381,12 @@ App = {
                         });
                     });
             });
-        // Show A/C is turned on
-        // replace a/c with ON version
-        // show waves coming out a/c
-        // Caption the event: show text
-        /*
-                Crafty.e("2D, DOM, gameTitle, Tween").attr({
-                    x: 295,
-                    y: 0
-                }).tween({
-                    y: 65
-                }, 60).bind("TweenEnd", function() {
-                    this.unbind("TweenEnd");
-                    this.tween({
-                        y: 55
-                    }, 20);
-                    this.bind("TweenEnd", function() {
-                        this.tween({
-                            y: 65,
-                        }, 20);
-                    });
-                });
-        */
 
         // Sleeping
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 145,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
@@ -397,6 +407,8 @@ App = {
                             alpha: 1.0
                         }, 2000);
                         w.animate("closing", 1);
+                        s1.animate("music", 1);
+                        s2.animate("music", 1);
                         this.bind("TweenEnd", function() {
                             this.tween({
                                 alpha: 0.0,
@@ -406,24 +418,22 @@ App = {
                     });
             });
 
-
         // Heart
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 240,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
             .color('rgb(255, 0, 0)')
             .bind('Click', function(MouseEvent) {
-                // Show temperature icon above patient
                 Crafty.e('2D, Canvas, Tween, heart')
                     .attr({
                         x: 50,
                         y: 200
                     })
-                    // Show temperature icon above patient
+
                     .tween({
                         y: 190
                     }, 200).bind("TweenEnd", function() {
@@ -437,13 +447,28 @@ App = {
                             }, 500);
                         });
                     });
+
+                n.tween({y: 635}, 100).bind("TweenEnd", function() {
+                    this.unbind("TweenEnd");
+                    this.tween({
+                        x: 530
+                    }, 100);
+                });
+                d.animate("dOpening", 1);
+
+                n.tween({y: 400}, 100).bind("TweenEnd", function() {
+                    this.unbind("TweenEnd");
+                    this.tween({
+                        x: 50
+                    }, 100);
+                });
             });
 
         // Voice-chat
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 335,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
@@ -475,7 +500,7 @@ App = {
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 430,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
@@ -507,7 +532,7 @@ App = {
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 525,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
@@ -539,7 +564,7 @@ App = {
         Crafty.e('2D, Canvas, Color, Mouse')
             .attr({
                 x: 620,
-                y: 815,
+                y: App.size.height - 110,
                 w: 70,
                 h: 70,
             })
@@ -566,28 +591,13 @@ App = {
                         });
                     });
             });
-
-
-        /*
-        Build buttons:
-        - Patient temperature
-        - Sleeping
-        - Heart rate
-        - Voice
-        - Reading
-        - TV
-        - Music (as part of sleeping or whatever)
-        */
     },
 
     start: function() {
         Crafty.init(App.size.width, App.size.height, document.getElementById('app'));
-        //Crafty.background('rgb(0, 255, 255)');
 
         App.load_sprites();
         App.build_room();
         App.build_buttons();
-
-
     }
 }
