@@ -6,13 +6,13 @@ function showInfoOn(object) {
         x[i].style.display = 'none';
     }
     // show this one
-    document.getElementById(object).style.display = 'block';
+    document.getElementById(object).style.display = 'inline-block';
 }
 
 function captionThis(action) {
     var y = document.getElementsByClassName('caption');
     var j;
-    for (j = 0; j < j.length; j++) {
+    for (j = 0; j < y.length; j++) {
         y[j].style.display = 'none';
     }
     // show this one

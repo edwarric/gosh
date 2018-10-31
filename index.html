@@ -5,7 +5,10 @@
     <meta charset="utf-8" />
     <title>GOSH project</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="style.css" rel="stylesheet" />
+    <link href="responsive.css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
     <script type="text/javascript" src="components.js"></script>
@@ -16,40 +19,68 @@
 </head>
 
 <body>
-    <div id="app"></div>
-    <div id="bed" class="text-box">
-        <h1 class="title">Bed</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="voice-assistant" class="text-box">
-        <h1 class="title">Voice assistant</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="ac" class="text-box">
-        <h1 class="title">A/C</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="window" class="text-box">
-        <h1 class="title">Window</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="dashboard" class="text-box">
-        <h1 class="title">Dashboard</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="speaker" class="text-box">
-        <h1 class="title">Speaker</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
-    <div id="nurse" class="text-box">
-        <h1 class="title">Nurse</h1>
-        <p class="content">Nisi exercitation ea non eiusmod quis duis ut velit esse sit esse commodo veniam sit officia eu cillum.Dolor do laboris mollit ipsum eu dolor ea.</p>
-    </div>
+    <div id="container">
+        <div id="app"></div>
+        <div id="bed" class="text-box">
+            <h1 class="title">Bed</h1>
+            <p class="content">The bed is electric and contains and temperature regulating mattress to ensure the patient remains at a comfortable temperature.</p>
+        </div>
+        <div id="voice-assistant" class="text-box">
+            <h1 class="title">Voice assistant</h1>
+            <p class="content">The patient is able to ask questions, alter their environment or call for the nurse with specific requests.</p>
+        </div>
+        <div id="ac" class="text-box">
+            <h1 class="title">A/C</h1>
+            <p class="content">Air-conditioning is available to regulate room temperature based on the patient's temperature.</p>
+        </div>
+        <div id="window" class="text-box">
+            <h1 class="title">Window</h1>
+            <p class="content">The automatic windows open and close to ensure fresh air enters the room and maintain temperature levels. Also, the blinds automatically open and close.</p>
+        </div>
+        <div id="dashboard" class="text-box">
+            <h1 class="title">Dashboard</h1>
+            <p class="content">All results from the sensors connected to the patient are linked to a dashboard and displayed clearly. The dashboard will alert a nurse if patient levels become abnormal. This makes it easier for nurses to manage their patients. A TV is shown on the patient's side for their entertainment.</p>
+        </div>
+        <div id="speaker" class="text-box">
+            <h1 class="title">Speaker</h1>
+            <p class="content">Appropriate music is played when the patient is reading or sleeping to aid in these activities.</p>
+        </div>
+        <div id="nurse" class="text-box">
+            <h1 class="title">Nurse</h1>
+            <p class="content">The nurse is able to manage all their patients in one place from the dashboard.</p>
+        </div>
 
-    <div id="temp" class="caption">
-        <p class="caption-content">
-            The patient's temperature is irregular. The air-conditioning is turned on to adjust the room temperature. Also, the windows may be opened.
-        </p>
+
+        <div id="temp" class="caption">
+            <p class="caption-content">
+                The patient's temperature is irregular. The air-conditioning is turned on to adjust the room temperature. Also, the windows may be opened. The bed heaters may be adjusted too.
+            </p>
+        </div>
+        <div id="sleep" class="caption">
+            <p class="caption-content">
+                To aid in sleeping, the blinds are closed and the lights switched off. Furthermore, soothing music is played.
+            </p>
+        </div>
+        <div id="heart" class="caption">
+            <p class="caption-content">
+                If the patient enters a dangerous state, the data fed into the patient dashboard is updated which alerts a nurse to attend the patient.
+            </p>
+        </div>
+        <div id="speech" class="caption">
+            <p class="caption-content">
+                The patient can make commands and call for the nurse using the voice assistant.
+            </p>
+        </div>
+        <div id="reading" class="caption">
+            <p class="caption-content">
+                When reading, a light above the patient is switched on and a reading music soundtrack is played.
+            </p>
+        </div>
+        <div id="medicine" class="caption">
+            <p class="caption-content">
+                The patient dashboard monitors patient levels and automatically regulates medicine intake. If the medicine needs to be given by a nurse, they are alerted.
+            </p>
+        </div>
     </div>
 </body>
 

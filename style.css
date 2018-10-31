@@ -1,42 +1,40 @@
-body {
+html, body {
+    min-height: 100%;
+    font-family: 'Consolas', 'Arial', 'sans-serif';
+    font-size: 18px;
+}
+
+#container {
     margin: 50px;
     min-width: 750px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-
 #app {
     //border: 1px solid black;
 }
 
 .text-box {
+    border: 5px solid black;
     display: none;
-    padding: 0 50px;
+    height: 190px;
+    margin: 0 22px;
+    padding: 50px;
     width: 600px;
 }
 
 .title {
-    font-family: 'Arial';
-    font-size: 30px;
-}
-
-.content {
-    font-family: 'Arial';
-    font-size: 18px;
+    font-size: 32px;
 }
 
 .caption {
     display: none;
     align-items: center;
     position: absolute;
-    top: 800px;
+    top: 820px;
     padding: 0 50px;
-    height: 150px;
-    width: 750px;
-}
-
-.caption-content {
-    font-family: 'Arial';
-    font-size: 18px;
+    height: 100px;
+    width: 740px;
+    border: 5px solid black;
 }
