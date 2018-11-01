@@ -262,6 +262,16 @@ window.App = {
             [0, 7]
         ]);
 
+        // window line error cover-up:
+        Crafty.e('2D, Canvas, Color')
+            .attr({
+                x: 50,
+                y: 89,
+                w: 600,
+                h: 4
+            })
+            .color('rgb(255, 255, 255)');
+
         // Chairs
         Crafty.e('2D, Canvas, chair')
             .attr({
