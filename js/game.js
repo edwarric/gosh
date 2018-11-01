@@ -159,7 +159,7 @@ window.App = {
         Crafty.e('2D, Canvas, buttonBg')
             .attr({
                 x: 0,
-                y: App.size.height - 150
+                y: App.size.height - 100
             });
 
         // Hallways

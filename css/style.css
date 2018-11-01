@@ -1,15 +1,21 @@
+html {
+	font-family: 'Consolas', 'Arial', 'sans-serif';
+}
+
 #textBox {
 	display: inline-block;
     border: 5px solid black;
-    height: 140px;
-    padding: 5px;
+    height: 100%;
+    padding: 5px 30px;
 	margin-bottom: 20px;
+	width: 526px;   // matches app width
 }
 
 #caption {
-    padding: 0 50px;
-    min-height: 100px;
+    padding: 5px 30px;
+    height: 100%;
     border: 5px solid black;
+	width: 526px;
 }
 
 #appWrapper {
@@ -19,7 +25,7 @@
 @media (min-width: 60em) {
 	#ui {
 		float: right;
-		width: 35%;
+		width: 100%;
 	}
 	#appWrapper {
 		float: left;

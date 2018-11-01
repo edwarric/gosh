@@ -59,7 +59,7 @@
 		Crafty.e('2D, Canvas, tempButton, Mouse')
 			.attr({
 				x: 46,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				// Show temperature icon above patient
@@ -91,7 +91,7 @@
 		Crafty.e('2D, Canvas, sleepButton, Mouse')
 			.attr({
 				x: 141,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				captionThis('sleep');
@@ -125,7 +125,7 @@
 		Crafty.e('2D, Canvas, heartButton, Mouse')
 			.attr({
 				x: 236,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				captionThis('heart');
@@ -251,7 +251,7 @@
 		Crafty.e('2D, Canvas, speechButton, Mouse')
 			.attr({
 				x: 331,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				captionThis('speech');
@@ -282,7 +282,7 @@
 		Crafty.e('2D, Canvas, bookButton, Mouse')
 			.attr({
 				x: 426,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				captionThis('reading');
@@ -314,7 +314,7 @@
 		Crafty.e('2D, Canvas, medicineButton, Mouse')
 			.attr({
 				x: 521,
-				y: App.size.height - 114
+				y: App.size.height - 64
 			})
 			.bind('Click', function(MouseEvent) {
 				captionThis('medicine');
