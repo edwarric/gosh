@@ -13,10 +13,16 @@
 }
 
 #appWrapper {
-	width: 60%;
-	float: left;
+	margin-bottom: -200px;
 }
-#ui {
-	width: 35%;
-	float: right;
+
+@media (min-width: 60em) {
+	#ui {
+		float: right;
+		width: 35%;
+	}
+	#appWrapper {
+		float: left;
+		width: 60%;
+	}
 }
